@@ -1,2 +1,7 @@
 @import './common';
-@import './example';
+@import './utils/vars';
+@import './components/container';
+@import './components/header';
+@import './components/main';
+@import './components/pagination';
+@import './components/btn-to-top';

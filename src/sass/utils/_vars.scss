@@ -1,0 +1,19 @@
+$mobile: screen and
+  (
+    min-width: 320px,
+  );
+$tablet: screen and
+  (
+    min-width: 768px,
+  );
+$desktop: screen and
+  (
+    min-width: 1200px,
+  );
+
+$accentColor: #ff001b;
+$headerTextColor: #ffffff;
+$movieMainTextColor: #000000;
+$movieInfoColor: #ff6b08;
+
+$transition: 350ms linear;

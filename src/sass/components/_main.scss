@@ -1,0 +1,176 @@
+.movies__section {
+  margin: 20px 0px 40px 0px;
+
+  @media screen and (min-width: 768px) {
+    margin: 60px 0px;
+  }
+}
+.movies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  @media screen and (min-width: 768px) {
+    gap: 32px;
+  }
+
+  @media screen and (min-width: 1200px) {
+    gap: 16px;
+  }
+  // justify-content: space-around;
+}
+
+.movie__card {
+  width: 100%;
+  height: 440px;
+  // margin: 10px;
+  @media screen and (min-width: 768px) {
+    width: calc((100% - 32px) / 2);
+  }
+
+  @media screen and (min-width: 768px) {
+    width: calc((100% - 32px) / 3);
+  }
+}
+
+.movie__poster {
+  height: 402px;
+}
+
+.movie__title {
+  margin: 10px 0px 0px 0px;
+  font-size: 12px;
+  line-height: 1.17;
+  text-transform: uppercase;
+
+  color: $movieMainTextColor;
+}
+
+.movie__info {
+  margin: 0;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+
+  color: $movieInfoColor;
+}
+// .movie__cover-inner {
+//   position: relative;
+//   height: 360px;
+// }
+
+// .movie__cover {
+//   max-width: 100%;
+//   height: 100%;
+// }
+
+// .movie__cover--darkened {
+//   background-color: #000000;
+//   opacity: 0.1;
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   max-width: 100%;
+//   height: 100%;
+//   z-index: 1;
+// }
+
+// .movie__cover--darkened:hover {
+//   background-color: grey;
+//   cursor: pointer;
+// }
+
+// .movie__category {
+//   font-size: 14px;
+//   color: #ffd80e;
+// }
+
+// .movie__date {
+//   width: 33px;
+//   white-space: nowrap;
+//   overflow: hidden;
+//   text-overflow: unset;
+//   margin-right: 10px;
+// }
+
+// .movie__average {
+//   position: absolute;
+//   top: 10px;
+//   left: 10px;
+//   right: 0;
+//   border-radius: 50%;
+//   width: 36px;
+//   height: 36px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   background-color: #1a191f;
+//   color: #ffffff;
+//   font-size: 14px;
+// }
+
+// .movie__average--green {
+//   border: 1px solid green;
+// }
+
+// .movie__average--orange {
+//   border: 1px solid orange;
+// }
+
+// .movie__average--red {
+//   border: 1px solid red;
+// }
+
+// .modal {
+//   display: none;
+//   position: fixed;
+//   z-index: 100;
+//   left: 0;
+//   top: 0;
+//   width: 100%;
+//   height: 100%;
+//   overflow: auto;
+//   background-color: rgba(0, 0, 0, 0.5);
+//   transition: width 2s;
+// }
+
+// .modal--show {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+// .modal__card {
+//   background-color: #ffffff;
+//   max-width: 600px;
+//   padding: 16px;
+//   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
+//   background-color: #1a191f;
+//   color: #ffffff;
+//   display: flex;
+//   flex-direction: column;
+// }
+
+// .modal__movie-backdrop {
+//   width: 200px;
+//   margin: 0 auto;
+// }
+
+// .modal__movie-info {
+//   margin-left: 20px;
+// }
+
+// .modal__button-close {
+//   padding: 5px;
+//   margin: 10px;
+//   align-self: center;
+// }
+
+// .modal__movie-site {
+//   color: #ffd80e;
+// }
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}

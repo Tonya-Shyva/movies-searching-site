@@ -10,13 +10,13 @@
           data-id='{{id}}'
           onerror="this.onerror=null;this.src='https://sd.keepcalms.com/i-w600/keep-calm-poster-not-found.jpg';"
         /></a>
-      {{!-- <span class='card__vote_average'>{{vote_average}}</span> --}}
 
       <h2 class='movie__title'>{{title}} {{name}}</h2>
       <p class='movie__info'>
         <span>{{#each genres}} {{name}} {{/each}}</span>
         |
         <span class='movie__date'>{{release_date}}</span>
+        <span class='card__vote_average'>{{vote_average}}</span>
       </p>
     </div>
   </li>

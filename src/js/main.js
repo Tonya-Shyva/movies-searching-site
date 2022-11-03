@@ -1,32 +1,91 @@
 import cardFilmTpl from '../templates/cardFilmTpl.hbs';
-import { fetchPopularMovies } from './fetchMovies';
+import { fetchPopularMovies } from './fetchMoviesApi';
+import { fetchSearchingMovies } from './fetchMoviesApi';
+import { fetchGenres } from './fetchMoviesApi';
 
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 const gallerySimpleLightbox = new SimpleLightbox('.gallery a');
 
-const moviesDiv = document.querySelector('.movies');
+import Notiflix from 'notiflix';
+
+// ----------for searching movies-------------------------------
+const searchFormRef = document.querySelector('.search__form');
+const inputRef = document.querySelector('input[type="text"]');
+const btnSearch = document.querySelector('.search__btn');
+const massageWarningRef = document.querySelector('.js-warning');
+const massageSuccessRef = document.querySelector('.js-search-results');
+// const trimmedValue = inputRef.value.trim();
+
+// -------------------------------------------------------------
+
+const moviesDiv = document.querySelector('.movies__list');
 // -------------------pagination refs---------------------------
 const paginationArrows = document.querySelectorAll('.pagination__arrow');
 const paginationList = document.querySelector('.pagination__pages');
 let items = [...paginationList.children];
+
+paginationArrows[0].disabled = true;
 // --------------------------------------------------------------
 
 let pageNumber = 1;
 
-fetchPopularMovies(pageNumber).then(popularMovies => {
-  console.log(popularMovies.total_pages);
-  // popularMovies.results.release_date = popularMovies.results.release_date.split(
-  //   '-'[0]
-  // );
-  renderPopularMovies(popularMovies.results);
-  renderPagination(popularMovies.total_pages);
-  hideOverPages();
-  gallerySimpleLightbox.refresh();
-});
+fetchPopularMovies(pageNumber)
+  .then(popularMovies => {
+    console.log(popularMovies.total_pages);
+    // popularMovies.results.release_date = popularMovies.results.release_date.split(
+    //   '-'[0]
+    // );
+    renderMovies(popularMovies.results);
+    renderPagination(popularMovies.total_pages);
+    hideOverPages();
+    gallerySimpleLightbox.refresh();
+  })
+  .catch(err => {
+    return (paginationList.innerHTML =
+      '<li class="no-movies"><img class="no-movies__img" src="https://www.brainpop.com/conceptmap/img/img_noresults_movies.png" alt="nothing found"/>></li>');
+  });
 
-function renderPopularMovies(movies) {
+function renderMovies(movies) {
   moviesDiv.innerHTML = cardFilmTpl(movies);
+}
+
+// -----search movies---------------------
+btnSearch.addEventListener('click', onBtnSearchClick);
+
+function onBtnSearchClick(e) {
+  e.preventDefault();
+  // cleanGallery();
+  const trimmedValue = inputRef.value.trim();
+  paginationArrows[0].disabled = true;
+  if (trimmedValue !== '') {
+    fetchSearchingMovies(trimmedValue, pageNumber).then(data => {
+      // console.log('onBtnSearchClick', data);
+      if (data.total_pages === 0) {
+        massageWarningRef.innerHTML =
+          '<p class="js-warning-text>Search result not successful. Enter the correct movie name and try again.</p>';
+        Notiflix.Notify.failure(
+          'Sorry, there are no movies matching your search query. Please try again.'
+        );
+      } else {
+        massageSuccessRef.textContent = `Hooray! We found ${data.total_results} movies.`;
+        renderMovies(data.results);
+        renderPagination(data.total_pages);
+        paginationArrowsShow(data.total_pages, trimmedValue, data.page);
+        hideOverPages();
+        showPage(document.querySelector('.pagination__page--active'));
+
+        Notiflix.Notify.success(
+          `Hooray! We found ${data.total_results} images.`
+        );
+        if (data.total_results > 0 && data.total_results < 20) {
+          paginationArrowsHide();
+          // paginationList.innerHTML = '';
+        }
+      }
+      gallerySimpleLightbox.refresh();
+    });
+  }
 }
 
 // -----pagination---------------------
@@ -49,14 +108,13 @@ function renderPagination(pages) {
       // const trimmedValue = inputRef.value.trim();
       let paginationPageNumber = Number(li.textContent);
       fetchPopularMovies(paginationPageNumber).then(data => {
-        showPage(document.querySelector('.pagination__page--active'));
         hideOverPages();
-
+        showPage(document.querySelector('.pagination__page--active'));
         // console.log(data);
         // console.log(paginationPageNumber, pages);
-        renderPopularMovies(data.results);
+        renderMovies(data.results);
         paginationArrows[0].disabled = false;
-        ifPageNum(paginationPageNumber, pages);
+        ifPageNum(paginationPageNumber, data.total_pages);
         gallerySimpleLightbox.refresh();
       });
 
@@ -85,7 +143,7 @@ function onPaginationArrowLeftClick(ev) {
   let pageForArrowleft = Number(currentPage.innerHTML);
   if (ev.target === paginationArrows[0]) {
     fetchPopularMovies((pageForArrowleft -= 1)).then(data => {
-      renderPopularMovies(data.results);
+      renderMovies(data.results);
       showPage(currentPage.previousSibling);
       hideOverPages();
       currentPage.previousSibling.classList.add('pagination__page--active');
@@ -107,7 +165,7 @@ function onPaginationArrowRightClick(ev) {
   if (ev.target === paginationArrows[1]) {
     fetchPopularMovies((pageForArrowRight += 1)).then(data => {
       // console.dir(currentPage.nextSibling);
-      renderPopularMovies(data.results);
+      renderMovies(data.results);
       showPage(currentPage.nextSibling);
       hideOverPages();
       currentPage.nextSibling.classList.add('pagination__page--active');

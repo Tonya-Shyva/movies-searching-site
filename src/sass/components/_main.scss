@@ -1,11 +1,11 @@
-.movies__section {
+.movies.section {
   margin: 20px 0px 40px 0px;
 
   @media screen and (min-width: 768px) {
     margin: 60px 0px;
   }
 }
-.movies {
+.movies__list {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -25,32 +25,45 @@
   // margin: 10px;
   @media screen and (min-width: 768px) {
     width: calc((100% - 32px) / 2);
+    height: 495px;
   }
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1200px) {
     width: calc((100% - 32px) / 3);
+    height: 634px;
   }
 }
 
 .movie__poster {
   height: 402px;
+
+  @media screen and (min-width: 768px) {
+    height: 455px;
+  }
+
+  @media screen and (min-width: 1200px) {
+    height: 574px;
+  }
+}
+
+.movie__title,
+.movie__info {
+  font-size: 12px;
+  line-height: 1.33;
+
+  @media screen and (min-width: 1200px) {
+    font-size: 20px;
+    line-height: 1.2;
+  }
 }
 
 .movie__title {
   margin: 10px 0px 0px 0px;
-  font-size: 12px;
-  line-height: 1.17;
   text-transform: uppercase;
-
   color: $movieMainTextColor;
 }
-
 .movie__info {
   margin: 0;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 1.33;
-
   color: $movieInfoColor;
 }
 // .movie__cover-inner {

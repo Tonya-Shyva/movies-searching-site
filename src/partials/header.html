@@ -7,31 +7,33 @@
       </a>
 
       <ul class="header__sidenav">
-            <li class="header__sidenav__item">
-              <a
-                href=""
-                class="header__sidenav__link header__sidenav__link--current home"
-                >Home</a
-              >
-            </li>
-            <li class="header__sidenav__item">
-              <a href="#" class="header__sidenav__link library"
-                >My library</a
-              >
-            </li>
-          </ul>
-        </nav>
+        <li class="header__sidenav__item">
+          <a
+            href="index.html"
+            class="header__sidenav__link header__sidenav__link--current"
+            >Home</a
+          >
+        </li>
+        <li class="header__sidenav__item">
+          <!--!!!!!!!!!!!!!!!! замість # зробити посилання на library.html -->
+          <a href="#" class="header__sidenav__link">My library</a>
+        </li>
+      </ul>
     </nav>
 
     <form class="search__form" id="search-form">
       <input type="text" class="search__input" placeholder="Movie search" />
       <button class="search__btn" type="submit">
         <svg class="search__icon">
-            <use href="./images/icons.svg#search"></use>
+          <use href="./images/icons.svg#search"></use>
         </svg>
       </button>
     </form>
-    <p class="js-warning header__warning"></p>
-    <p class="js-search-results header__warning"></p>
+
+    <!-- якщо не будемо використовувати бібліотеку Notiflix -->
+    <div class="massages">
+      <p class="js-warning"></p>
+      <p class="js-search-results"></p>
+    </div>
   </div>
 </header>

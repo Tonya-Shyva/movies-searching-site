@@ -2,6 +2,7 @@ import cardFilmTpl from '../templates/cardFilmTpl.hbs';
 import { fetchPopularMovies } from './fetchMoviesApi';
 import { fetchSearchingMovies } from './fetchMoviesApi';
 import { fetchGenres } from './fetchMoviesApi';
+import { toggleLightTheme } from './light-dark-theme';
 
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -29,15 +30,27 @@ paginationArrows[0].disabled = true;
 // --------------------------------------------------------------
 
 let pageNumber = 1;
-
+// toggleLightTheme();
 fetchPopularMovies(pageNumber)
   .then(popularMovies => {
-    console.log(popularMovies.total_pages);
-    // popularMovies.results.release_date = popularMovies.results.release_date.split(
-    //   '-'[0]
-    // );
+    fetchGenres()
+      .then(genres => {
+        console.log(genres);
+      })
+      .catch(console.error());
+    //--------- щоб показувало лише рік випуску(без дати та місяця)---------------
+    popularMovies.results.map(movie => {
+      if (movie.release_date && movie.genres_ids)
+        movie.release_date = movie.release_date.slice(0, 4);
+
+      if (movie.first_air_date)
+        movie.first_air_date = movie.first_air_date.slice(0, 4);
+    });
+    // ---------------------------------------------------
     renderMovies(popularMovies.results);
+
     renderPagination(popularMovies.total_pages);
+    toggleLightTheme();
     hideOverPages();
     gallerySimpleLightbox.refresh();
   })
@@ -71,6 +84,7 @@ function onBtnSearchClick(e) {
         massageSuccessRef.textContent = `Hooray! We found ${data.total_results} movies.`;
         renderMovies(data.results);
         renderPagination(data.total_pages);
+        // toggleLightTheme();
         paginationArrowsShow(data.total_pages, trimmedValue, data.page);
         hideOverPages();
         showPage(document.querySelector('.pagination__page--active'));
@@ -80,7 +94,6 @@ function onBtnSearchClick(e) {
         );
         if (data.total_results > 0 && data.total_results < 20) {
           paginationArrowsHide();
-          // paginationList.innerHTML = '';
         }
       }
       gallerySimpleLightbox.refresh();
@@ -90,7 +103,7 @@ function onBtnSearchClick(e) {
 
 // -----pagination---------------------
 function renderPagination(pages) {
-  console.log(pages);
+  // console.log(pages);
   for (let i = 1; i <= pages; i += 1) {
     // console.log(i);
     const li = renderPaginationBtn(i);
@@ -113,6 +126,7 @@ function renderPagination(pages) {
         // console.log(data);
         // console.log(paginationPageNumber, pages);
         renderMovies(data.results);
+        toggleLightTheme();
         paginationArrows[0].disabled = false;
         ifPageNum(paginationPageNumber, data.total_pages);
         gallerySimpleLightbox.refresh();

@@ -2,6 +2,7 @@
 
 import throttle from 'lodash.throttle';
 const btnToTop = document.querySelector('.to-top');
+btnToTop.classList.add('visually-hidden');
 
 window.addEventListener('scroll', throttle(hideElOnScroll(btnToTop), 250));
 
